@@ -7,28 +7,28 @@ import { Button, Container, Divider, Form, Icon } from 'semantic-ui-react';
 import MenuSistema from '../../MenuSistema';
 
 export default function FormCliente() {
-    const [nome, setNome] = useState();
-    const [cpf, setCpf] = useState();
-    const [dataNascimento, setDataNascimento] = useState();
-    const [foneCelular, setFoneCelular] = useState();
-    const [foneFixo, setFoneFixo] = useState();
+    const [titulo, setTitulo] = useState();
+    const [descricao, setDescricao] = useState();
+    const [valorUnitario, setValorUnitario] = useState();
+    const [tempoEntregaMinimo, setTempoEntregaMinimo] = useState();
+    const [tempoEntregaMaximo, setTempoEntregaMaximo] = useState();
 
     function salvar() {
 
-		let clienteRequest = {
-		     nome: nome,
-		     cpf: cpf,
-		     dataNascimento: dataNascimento,
-		     foneCelular: foneCelular,
-		     foneFixo: foneFixo
+		let produtoRequest = {
+            titulo: titulo,
+		     descricao: descricao,
+		     valorUnitario: valorUnitario,
+		     tempoEntregaMinimo: tempoEntregaMinimo,
+		     tempoEntregaMaximo: tempoEntregaMaximo
 		}
 	
-		axios.post("http://localhost:8082/api/cliente", clienteRequest)
+		axios.post("http://localhost:8082/api/produto", produtoRequest)
 		.then((response) => {
-		     console.log('Cliente cadastrado com sucesso.')
+		     console.log('Produto cadastrado com sucesso.')
 		})
 		.catch((error) => {
-		     console.log('Erro ao incluir o um cliente.')
+		     console.log('Erro ao incluir o um produto.')
 		})
 	}
 
@@ -41,7 +41,7 @@ export default function FormCliente() {
 
                 <Container textAlign='justified' >
 
-                    <h2> <span style={{ color: 'darkgray' }}> Cliente &nbsp;<Icon name='angle double right' size="small" /> </span> Cadastro </h2>
+                    <h2> <span style={{ color: 'darkgray' }}> Produto &nbsp;<Icon name='angle double right' size="small" /> </span> Cadastro </h2>
 
                     <Divider />
 
@@ -54,22 +54,23 @@ export default function FormCliente() {
                                 <Form.Input
                                     required
                                     fluid
-                                    label='Nome'
+                                    label='Titulo'
                                     maxLength="100"
-                                    value={nome}
-                                    onChange={e => setNome(e.target.value)}
+                                    value={titulo}
+                                    onChange={e => setTitulo(e.target.value)}
                                 />
 
                                 <Form.Input
+                                
                                     required
                                     fluid
-                                    label='CPF'>
+                                    label='Descrição'>
                                     <InputMask
-                                        required
-                                        mask="999.999.999-99"
-                                        value={cpf}
-                                        onChange={e => setCpf(e.target.value)}
+                                        
+                                        value={descricao}
+                                        onChange={e => setDescricao(e.target.value)}
                                     />
+                                
                                 </Form.Input>
 
                             </Form.Group>
@@ -78,37 +79,38 @@ export default function FormCliente() {
 
                                 <Form.Input
                                     fluid
-                                    label='Fone Celular'
-                                    width={6}>
+                                    label='Valor do Produto'
+                                    
+                                    >
                                     <InputMask
-                                        mask="(99) 9999.9999"
-                                        value={foneCelular}
-                                        onChange={e => setFoneCelular(e.target.value)}
+                                        
+                                        value={valorUnitario}
+                                        onChange={e => setValorUnitario(e.target.value)}
                                     />
                                 </Form.Input>
 
                                 <Form.Input
                                     fluid
-                                    label='Fone Fixo'
-                                    width={6}>
+                                    label='Tempo de Entrega Minimo'
+                                    >
                                     <InputMask
-                                        mask="(99) 9999.9999"
-                                        value={foneFixo}
-                                        onChange={e => setFoneFixo(e.target.value)}
+                                        
+                                        value={tempoEntregaMinimo}
+                                        onChange={e => setTempoEntregaMinimo(e.target.value)}
                                     />
                                 </Form.Input>
 
                                 <Form.Input
                                     fluid
-                                    label='Data Nascimento'
-                                    width={6}
+                                    label='Tempo de Entrega Maximo'
+                                    
                                 >
                                     <InputMask
-                                        mask="99/99/9999"
+                                       
                                         maskChar={null}
-                                        placeholder="Ex: 20/03/1985"
-                                        value={dataNascimento}
-                                        onChange={e => setDataNascimento(e.target.value)}
+                                        
+                                        value={tempoEntregaMaximo}
+                                        onChange={e => setTempoEntregaMaximo(e.target.value)}
                                     />
                                 </Form.Input>
 
