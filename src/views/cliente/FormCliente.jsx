@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { Button, Container, Divider, Form, Icon } from 'semantic-ui-react';
 import MenuSistema from '../../MenuSistema';
 
+
 export default function FormCliente() {
     const [nome, setNome] = useState();
     const [cpf, setCpf] = useState();
@@ -127,7 +128,7 @@ export default function FormCliente() {
                                 color='orange'
                             >
                                 <Icon name='reply' />
-                                <Link to={'/home'}>Voltar</Link>
+                                <Link to={'/list-cliente'}>Voltar</Link>
 
                             </Button>
 
