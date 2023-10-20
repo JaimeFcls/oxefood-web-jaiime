@@ -271,7 +271,7 @@ export default function FormEntregador() {
                 color="orange"
               >
                 <Icon name="reply" />
-                <Link to={"/"}>Voltar</Link>
+                <Link to={"/list-entregador"}>Voltar</Link>
               </Button>
 
               <Button
