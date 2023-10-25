@@ -4,7 +4,16 @@ import { Link } from "react-router-dom";
 import { Button, Container, Divider, Header, Icon, Modal, Table } from "semantic-ui-react";
 import MenuSistema from "../../MenuSistema";
 
-export default function ListRestaurantes() {
+export default function ListFornecedor() {
+function formatarData(dataParam) {
+    if (dataParam === null || dataParam === "" || dataParam === undefined) {
+      return "";
+    }
+
+    let arrayData = dataParam.split("-");
+    return arrayData[2] + "/" + arrayData[1] + "/" + arrayData[0];
+  }
+
     const [lista, setLista] = useState([]);
     const [openModal, setOpenModal] = useState(false);
     const [idRemover, setIdRemover] = useState();
@@ -15,16 +24,16 @@ export default function ListRestaurantes() {
 
     async function remover() {
         await axios
-            .delete("http://localhost:8082/api/restaurante/" + idRemover)
+            .delete("http://localhost:8082/api/fornecedor/" + idRemover)
             .then((response) => {
-                console.log("Restaurante removido com sucesso.");
+                console.log("Fornecedor removido com sucesso.");
 
-                axios.get("http://localhost:8082/api/restaurante").then((response) => {
+                axios.get("http://localhost:8082/api/fornecedor").then((response) => {
                     setLista(response.data);
                 });
             })
             .catch((error) => {
-                console.log("Erro ao remover um restaurante.");
+                console.log("Erro ao remover um fornecedor.");
             });
         setOpenModal(false);
     }
@@ -36,7 +45,7 @@ export default function ListRestaurantes() {
 
     function carregarLista() {
         axios
-            .get("http://localhost:8082/api/restaurante")
+            .get("http://localhost:8082/api/fornecedor")
             .then((response) => {
                 setLista(response.data);
             })
@@ -51,7 +60,7 @@ export default function ListRestaurantes() {
             <MenuSistema />
             <div style={{ marginTop: "3%" }}>
                 <Container textAlign="justified">
-                    <h2> Restaurantes </h2>
+                    <h2> Fornecedores </h2>
                     <Divider />
 
                     <div style={{ marginTop: "4%" }}>
@@ -62,7 +71,7 @@ export default function ListRestaurantes() {
                             icon="clipboard outline"
                             floated="right"
                             as={Link}
-                            to="/form-restaurantes"
+                            to="/form-fornecedor"
                         />
                         <br />
                         <br />
@@ -72,30 +81,37 @@ export default function ListRestaurantes() {
                             <Table.Header>
                                 <Table.Row>
                                     <Table.HeaderCell>Nome</Table.HeaderCell>
-                                    <Table.HeaderCell>Cnpj</Table.HeaderCell>
-                                    <Table.HeaderCell>Valor Pedido Minimo</Table.HeaderCell>
+                                    <Table.HeaderCell>Endereço</Table.HeaderCell>
+                                    <Table.HeaderCell>Data Fundação</Table.HeaderCell>                             
+                                    <Table.HeaderCell>Pagina Web</Table.HeaderCell>
+                                    <Table.HeaderCell>Valor Mercado</Table.HeaderCell>
+                                    <Table.HeaderCell>Contato Vendedor</Table.HeaderCell>
                                     <Table.HeaderCell textAlign="center">Ações</Table.HeaderCell>
                                 </Table.Row>
                             </Table.Header>
 
                             <Table.Body>
-                                {lista.map((restaurante) => (
-                                    <Table.Row key={restaurante.id}>
-                                        <Table.Cell>{restaurante.nome}</Table.Cell>
-                                        <Table.Cell>{restaurante.cnpj}</Table.Cell>
-                                        <Table.Cell>{"R$ " + restaurante.valorPedidoMin}</Table.Cell>
+                                {lista.map((fornecedor) => (
+                                    <Table.Row key={fornecedor.id}>
+                                        <Table.Cell>{fornecedor.nome}</Table.Cell>
+                                        <Table.Cell>{fornecedor.endereco}</Table.Cell>
+                                        <Table.Cell>{formatarData(fornecedor.dataFundacao)}</Table.Cell>
+                                        <Table.Cell>{fornecedor.paginaWeb}</Table.Cell>
+                                        <Table.Cell>{fornecedor.valorMercado}</Table.Cell>
+                                        <Table.Cell>{fornecedor.contatoVendedor}</Table.Cell>
+                                        
 
                                         <Table.Cell textAlign="center">
                                             <Button
                                                 inverted
                                                 circular
                                                 color="green"
-                                                title="Clique aqui para editar os dados deste restaurante"
+                                                title="Clique aqui para editar os dados deste fornecedor"
                                                 icon
                                             >
                                                 <Link
-                                                    to="/form-restaurantes"
-                                                    state={{ id: restaurante.id }}
+                                                    to="/form-fornecedor"
+                                                    state={{ id: fornecedor.id }}
                                                     style={{ color: "green" }}
                                                 >
                                                     {" "}
@@ -107,9 +123,9 @@ export default function ListRestaurantes() {
                                                 inverted
                                                 circular
                                                 color="red"
-                                                title="Clique aqui para remover este restaurante"
+                                                title="Clique aqui para remover este fornecedor"
                                                 icon
-                                                onClick={(e) => confirmaRemover(restaurante.id)}
+                                                onClick={(e) => confirmaRemover(fornecedor.id)}
                                             >
                                                 <Icon name="trash" />
                                             </Button>
