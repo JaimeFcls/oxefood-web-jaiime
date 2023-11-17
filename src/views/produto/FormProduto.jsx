@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Button, Container, Divider, Form, Icon } from 'semantic-ui-react';
+import { Button, Container, Divider, Form, Icon, Segment } from 'semantic-ui-react';
 import MenuSistema from '../../MenuSistema';
 
 export default function FormProduto() {
